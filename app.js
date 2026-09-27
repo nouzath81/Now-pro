@@ -11,10 +11,26 @@ const categories=[...new Set(PRODUCTS.map(p=>p.category))].sort();
 function imgUrl(p){/* Replace/extend this function with exact supplier image URLs in image-map.js when available. */return p.imageUrl||""}
 function placeholder(p){return categoryIcon(p.category, p.code)}
 function imageFor(p){return imgUrl(p)||placeholder(p)}
-function renderCategories(){const e=$("#categories");e.innerHTML=`<button class="chip active" data-cat="ALL">All</button>`+categories.map(c=>`<button class="chip" data-cat="${esc(c)}">${esc(c)}</button>`).join("");e.onclick=x=>{let b=x.target.closest(".chip");if(!b)return;state.cat=b.dataset.cat;e.querySelectorAll(".chip").forEach(y=>y.classList.toggle("active",y===b));render()}}
+function renderCategories(){const e=$("#categories");e.innerHTML=`<button class="chip active" data-cat="ALL">All</button>`+categories.map(c=>`<button class="chip" data-cat="${esc(c)}">${esc(categoryLabel(c))}</button>`).join("");e.onclick=x=>{let b=x.target.closest(".chip");if(!b)return;state.cat=b.dataset.cat;e.querySelectorAll(".chip").forEach(y=>y.classList.toggle("active",y===b));render()}}
 function filtered(){let q=state.q.toLowerCase().trim();return PRODUCTS.filter(p=>(state.cat==="ALL"||p.category===state.cat)&&(!q||p.code.toLowerCase().includes(q)||p.description.toLowerCase().includes(q)))}
-function render(){let a=filtered();$("#count").textContent=a.length.toLocaleString();$("#products").innerHTML=a.map((p)=>`<article class="card" data-i="${PRODUCTS.indexOf(p)}"><img class="photo" loading="lazy" decoding="async" src="${imageFor(p)}" alt="${esc(p.code)}" onerror="this.src='${placeholder(p)}'"><div class="body"><div class="tag">${esc(p.category)}</div><div class="code">${esc(p.code)}</div><div class="desc">${esc(p.description)}</div><div class="cardPrice">${esc(p.priceDisplay)}</div><button class="addOrder cardAdd" data-code="${esc(p.code)}">Add to order</button></div></article>`).join("");$("#empty").hidden=a.length>0}
-function openDetail(p){$("#detailImg").src=imageFor(p);$("#detailImg").alt=p.code;$("#detailCat").textContent=p.category;$("#detailCode").textContent=p.code;$("#detailDesc").textContent=p.description;$("#detailPrice").textContent=p.priceDisplay;$("#waBtn").onclick=()=>location.href="https://wa.me/?text="+encodeURIComponent(`Product: ${p.code}\n${p.description}\nPrice: ${p.priceDisplay}`);$("#detail").hidden=false}
+function categoryLabel(cat){return (window.CATEGORY_LABEL&&window.CATEGORY_LABEL[cat])||cat}
+function cardHtml(p){return `<article class="card" data-i="${PRODUCTS.indexOf(p)}"><img class="photo" loading="lazy" decoding="async" src="${imageFor(p)}" alt="${esc(p.code)}" onerror="this.src='${placeholder(p)}'"><div class="body"><div class="tag">${esc(categoryLabel(p.category))}</div><div class="code">${esc(p.code)}</div><div class="desc">${esc(p.description)}</div><div class="cardPrice">${esc(p.priceDisplay)}</div><button class="addOrder cardAdd" data-code="${esc(p.code)}">Add to order</button></div></article>`}
+function render(){
+  let a=filtered();
+  $("#count").textContent=a.length.toLocaleString();
+  const byCat={};
+  a.forEach(p=>{(byCat[p.category]=byCat[p.category]||[]).push(p)});
+  const orderedCats=categories.filter(c=>byCat[c]&&byCat[c].length);
+  $("#products").innerHTML=orderedCats.map(cat=>{
+    const items=byCat[cat];
+    return `<section class="catSection">
+      <div class="catHeader"><h2>${esc(categoryLabel(cat))}</h2><span class="catCount">${items.length} item${items.length===1?"":"s"}</span></div>
+      <div class="grid">${items.map(cardHtml).join("")}</div>
+    </section>`;
+  }).join("");
+  $("#empty").hidden=a.length>0;
+}
+function openDetail(p){$("#detailImg").src=imageFor(p);$("#detailImg").alt=p.code;$("#detailCat").textContent=categoryLabel(p.category);$("#detailCode").textContent=p.code;$("#detailDesc").textContent=p.description;$("#detailPrice").textContent=p.priceDisplay;$("#waBtn").onclick=()=>location.href="https://wa.me/?text="+encodeURIComponent(`Product: ${p.code}\n${p.description}\nPrice: ${p.priceDisplay}`);$("#detail").hidden=false}
 $("#products").onclick=e=>{
   let addBtn=e.target.closest(".cardAdd");
   if(addBtn){e.stopPropagation();addToCart(addBtn.dataset.code,1);addBtn.textContent="Added ✓";setTimeout(()=>{addBtn.textContent="Add to order"},900);return}

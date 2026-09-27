@@ -27,11 +27,37 @@ window.CATEGORY_ICON_TYPE = {
   ITEM: "generic",
 };
 
+window.CATEGORY_LABEL = {
+  BATACE: "Acer Batteries", BATAPP: "Apple / MacBook Batteries", BATASU: "Asus Batteries",
+  BATDEL: "Dell Batteries", BATHP: "HP Batteries", BATLEN: "Lenovo Batteries",
+  BATSAM: "Samsung Batteries", BATSON: "Sony Batteries", BATTOS: "Toshiba Batteries",
+  CHRACE: "Acer Chargers", CHRAPP: "Apple Chargers", CHRASU: "Asus Chargers",
+  CHRDEL: "Dell Chargers", CHRHP: "HP Chargers", CHRLEN: "Lenovo Chargers",
+  CHRSAM: "Samsung Chargers", CHRSON: "Sony Chargers", CHRTOS: "Toshiba Chargers",
+  CABOEM: "Power Cables", CARCAN: "Canon Cartridges", CAREPS: "Epson Cartridges",
+  DRASU: "Asus Display Ribbons", DRDEL: "Dell Display Ribbons", DRHP: "HP Display Ribbons",
+  DWROEM: "DVD Writers",
+  FANACE: "Acer Cooling Fans", FANASU: "Asus Cooling Fans", FANDEL: "Dell Cooling Fans",
+  FANHP: "HP Cooling Fans", FANLEN: "Lenovo Cooling Fans", FANMSI: "MSI Cooling Fans",
+  FANSAM: "Samsung Cooling Fans", FANTOS: "Toshiba Cooling Fans",
+  HDDLEX: "Lexar SSD Drives", HDDWD: "WD Hard Disks",
+  HOUDEL: "Dell Housings", HOUHP: "HP Housings", HOULEN: "Lenovo Housings", HOUOEM: "Generic Housings",
+  KEYACE: "Acer Keyboards", KEYASU: "Asus Keyboards", KEYDEL: "Dell Keyboards",
+  KEYHP: "HP Keyboards", KEYLEN: "Lenovo Keyboards", KEYSAM: "Samsung Keyboards",
+  KEYSON: "Sony Keyboards", KEYTOS: "Toshiba Keyboards",
+  LHDEL: "Dell Hinges", LHHP: "HP Hinges",
+  RAMKIG: "Kingston RAM",
+  SPEACE: "Acer Speakers", SPEASU: "Asus Speakers", SPEDEL: "Dell Speakers",
+  SPEHP: "HP Speakers", SPELEN: "Lenovo Speakers", SPETOS: "Toshiba Speakers",
+  SCROEM: "Laptop Screens",
+  ITEM: "Other Items",
+};
+
 const ICON_COLORS = {
-  battery: "#0F6B5C", charger: "#C97B2E", cable: "#6B7280", cartridge: "#7C3AED",
-  ribbon: "#2563EB", dvd: "#0891B2", fan: "#DC2626", storage: "#111827",
-  housing: "#92400E", keyboard: "#1D4ED8", hinge: "#4B5563", ram: "#16A34A",
-  speaker: "#DB2777", screen: "#0EA5E9", generic: "#6B7280",
+  battery: "#1BBF95", charger: "#E2A354", cable: "#9CA8A2", cartridge: "#B794F6",
+  ribbon: "#63B3ED", dvd: "#4FD1C5", fan: "#FC8181", storage: "#EDF3EF",
+  housing: "#D69E6B", keyboard: "#7FB4E8", hinge: "#9CA8A2", ram: "#68D391",
+  speaker: "#F687B3", screen: "#63C7ED", generic: "#9CA8A2",
 };
 
 const ICON_PATHS = {
@@ -58,9 +84,9 @@ function categoryIcon(category, code) {
   const path = ICON_PATHS[type] || ICON_PATHS.generic;
   const label = String(code || "").slice(0, 20);
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="900" height="650" viewBox="0 0 240 200">
-    <rect width="240" height="200" fill="#F5F6F3"/>
+    <rect width="240" height="200" fill="#182620"/>
     <g fill="${color}" stroke="${color}" color="${color}">${path}</g>
-    <text x="120" y="175" text-anchor="middle" font-family="Arial" font-size="13" fill="#536159">${label.replace(/[&<>]/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]))}</text>
+    <text x="120" y="175" text-anchor="middle" font-family="Arial" font-size="13" fill="#93A69B">${label.replace(/[&<>]/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]))}</text>
   </svg>`;
   return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
 }
