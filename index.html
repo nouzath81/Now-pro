@@ -3,49 +3,47 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#111827">
-<title>Product Catalogue</title>
+<meta name="theme-color" content="#0B3B34">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Techtrends Pvt Ltd — Product Catalogue</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="topbar">
   <div>
-    <div class="brand">Product Catalogue</div>
-    <div class="sub">Mobile price list</div>
+    <div class="brand">Techtrends <span class="brandSuffix">Pvt Ltd</span></div>
+    <div class="sub">Colombo · 076 533 4423</div>
   </div>
-  <button id="shareBtn" class="iconBtn" title="Share catalogue">↗</button>
+  <button id="shareBtn">↗</button>
 </header>
-
 <main>
-  <section class="hero">
-    <h1>Products</h1>
-    <p><span id="count"></span> products available</p>
-  </section>
-
-  <div class="searchWrap">
-    <span>⌕</span>
-    <input id="search" type="search" placeholder="Search product code or description…" autocomplete="off">
-    <button id="clearBtn" class="clear">×</button>
-  </div>
-
-  <div id="categories" class="chips"></div>
-  <div id="products" class="grid"></div>
-  <div id="empty" class="empty" hidden>No products found.</div>
+<section class="hero"><h1>Products</h1><p><b id="count">0</b> products • images cache automatically</p></section>
+<div class="searchWrap">⌕ <input id="search" type="search" placeholder="Search model, code or description"><button id="clearBtn">×</button></div>
+<div id="categories" class="chips"></div>
+<div id="products" class="grid"></div><div id="empty" class="empty" hidden>No products found.</div>
 </main>
+<footer class="siteFooter">
+  <div class="footerBrand">Techtrends Pvt Ltd</div>
+  <div>Colombo, Sri Lanka</div>
+  <div>Contact: <a href="tel:0765334423">076 533 4423</a></div>
+</footer>
+<div id="detail" class="modal" hidden><div class="backdrop"></div><div class="sheet">
+<button id="closeDetail" class="close">×</button><img id="detailImg" class="detailImg" alt="" loading="lazy">
+<div class="tag" id="detailCat"></div><h2 id="detailCode"></h2><p id="detailDesc"></p><div class="price" id="detailPrice"></div>
+<div class="detailActions"><button id="detailAddBtn" class="addOrder">Add to order</button><button id="waBtn" class="wa">Share on WhatsApp</button></div>
+</div></div>
 
-<div id="detail" class="modal" hidden>
-  <div class="backdrop"></div>
-  <div class="sheet">
-    <button id="closeDetail" class="close">×</button>
-    <div class="tag" id="detailCat"></div>
-    <h2 id="detailCode"></h2>
-    <p id="detailDesc"></p>
-    <div class="price" id="detailPrice"></div>
-    <button id="waBtn" class="wa">Share on WhatsApp</button>
-  </div>
-</div>
+<button id="cartFab" class="cartFab" hidden><span>🛒</span><span id="cartCount" class="cartCount">0</span></button>
 
-<script src="products.js"></script>
-<script src="app.js"></script>
-</body>
-</html>
+<div id="cartModal" class="modal" hidden><div class="backdrop"></div><div class="sheet">
+<button id="closeCart" class="close">×</button>
+<h2>Your order</h2>
+<div id="cartItems" class="cartItems"></div>
+<div id="cartEmpty" class="empty" hidden>No products added yet.</div>
+<div class="cartTotalRow"><span>Total</span><b id="cartTotal">LKR 0</b></div>
+<label class="field"><span>Your name (optional)</span><input id="custName" type="text" placeholder="e.g. Nimal Perera"></label>
+<button id="sendOrderBtn" class="wa">Send Order via WhatsApp</button>
+</div></div>
+
+<script src="products.js"></script><script src="category-icons.js"></script><script src="app.js"></script>
+</body></html>
